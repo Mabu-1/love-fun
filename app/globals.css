@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+:root {
+  --hotpink: #ff3d7f;
+  --sunshine: #ffd23f;
+  --grape: #6a0572;
+  --cream: #fff8f0;
+  --sky: #4ecdc4;
+  --ink: #2b1b3d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+  font-family: var(--font-body), sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), sans-serif;
+}
+
+/* wobbly chaotic blob background, shared across pages */
+.chaos-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+.chaos-bg span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.55;
+  animation: float 14s ease-in-out infinite;
+}
+
+.chaos-bg span:nth-child(1) {
+  width: 420px;
+  height: 420px;
+  background: var(--hotpink);
+  top: -10%;
+  left: -8%;
+  animation-duration: 16s;
+}
+
+.chaos-bg span:nth-child(2) {
+  width: 320px;
+  height: 320px;
+  background: var(--sunshine);
+  bottom: -10%;
+  right: -6%;
+  animation-duration: 12s;
+  animation-delay: -3s;
+}
+
+.chaos-bg span:nth-child(3) {
+  width: 280px;
+  height: 280px;
+  background: var(--sky);
+  top: 40%;
+  right: 15%;
+  animation-duration: 18s;
+  animation-delay: -6s;
+}
+
+.chaos-bg span:nth-child(4) {
+  width: 260px;
+  height: 260px;
+  background: var(--grape);
+  bottom: 10%;
+  left: 10%;
+  opacity: 0.35;
+  animation-duration: 20s;
+  animation-delay: -9s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(30px, -40px) scale(1.15) rotate(8deg);
+  }
+  66% {
+    transform: translate(-25px, 25px) scale(0.9) rotate(-6deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chaos-bg span {
+    animation: none;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.wiggle-border {
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+.scribble-underline {
+  text-decoration: underline wavy var(--hotpink) 3px;
+  text-underline-offset: 6px;
+}
