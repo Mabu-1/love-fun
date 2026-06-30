@@ -67,9 +67,27 @@ export default function RevealPage() {
   }, []);
 
   const hasPlan = date && time && food && location;
+  const HEARTS = ["💕", "💖", "💗", "💝", "💞"];
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center px-6 py-16 text-center">
+    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-16 text-center">
+      {HEARTS.map((h, i) => (
+        <motion.span
+          key={i}
+          className="pointer-events-none absolute select-none text-2xl opacity-60 sm:text-3xl"
+          style={{ left: `${10 + i * 18}%`, top: "-10%" }}
+          animate={{ y: ["0vh", "110vh"], rotate: [0, 360] }}
+          transition={{
+            duration: 9 + i * 1.5,
+            repeat: Infinity,
+            ease: "linear",
+            delay: i * 1.2,
+          }}
+        >
+          {h}
+        </motion.span>
+      ))}
+
       <motion.div
         initial={{ scale: 0, rotate: -10 }}
         animate={{ scale: 1, rotate: 0 }}

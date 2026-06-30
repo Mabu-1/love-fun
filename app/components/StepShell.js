@@ -4,9 +4,35 @@ import { motion } from "framer-motion";
 
 const TOTAL_STEPS = 3;
 
+const FLOATERS = ["💌", "✨", "💫", "🌸"];
+
 export default function StepShell({ step, eyebrow, title, subtitle, children }) {
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center px-6 py-16">
+    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-16">
+      {FLOATERS.map((emoji, i) => (
+        <motion.span
+          key={emoji}
+          className="pointer-events-none absolute select-none text-3xl opacity-70 sm:text-4xl"
+          style={{
+            top: `${15 + i * 20}%`,
+            left: i % 2 === 0 ? "8%" : "auto",
+            right: i % 2 === 1 ? "8%" : "auto",
+          }}
+          animate={{
+            y: [0, -16, 0],
+            rotate: [0, i % 2 === 0 ? 10 : -10, 0],
+          }}
+          transition={{
+            duration: 4 + i,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: i * 0.4,
+          }}
+        >
+          {emoji}
+        </motion.span>
+      ))}
+
       <div className="mb-8 flex items-center gap-3">
         {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
           <motion.span
@@ -49,10 +75,11 @@ export default function StepShell({ step, eyebrow, title, subtitle, children }) 
       )}
 
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 16, rotate: -1 }}
+        animate={{ opacity: 1, y: 0, rotate: 0 }}
         transition={{ delay: 0.15 }}
-        className="mt-10 w-full max-w-sm rounded-[2rem] border-2 border-[var(--grape)]/20 bg-white/70 p-8 shadow-xl backdrop-blur-sm"
+        whileHover={{ rotate: -0.5 }}
+        className="mt-10 w-full max-w-sm rounded-[2rem] border-2 border-[var(--grape)]/20 bg-white/70 p-8 shadow-[6px_6px_0_rgba(106,5,114,0.15)] backdrop-blur-sm"
       >
         {children}
       </motion.div>

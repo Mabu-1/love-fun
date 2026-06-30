@@ -70,6 +70,16 @@ export default function SchedulePage() {
         >
           lock it in →
         </motion.button>
+
+        {date && time && (
+          <motion.p
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="font-display rounded-2xl bg-[var(--sunshine)]/40 px-4 py-3 text-center text-sm font-semibold text-[var(--grape)]"
+          >
+            ✨ {date} at {time}, it's a date ✨
+          </motion.p>
+        )}
       </form>
     </StepShell>
   );

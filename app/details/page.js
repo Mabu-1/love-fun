@@ -40,9 +40,22 @@ export default function DetailsPage() {
     >
       <form onSubmit={handleNext} className="flex w-full flex-col gap-6">
         <div className="text-left">
-          <p className="font-display mb-3 text-sm font-bold text-[var(--grape)]">
-            what are we eating?
-          </p>
+          <div className="mb-3 flex items-center justify-between">
+            <p className="font-display text-sm font-bold text-[var(--grape)]">
+              what are we eating?
+            </p>
+            <motion.button
+              type="button"
+              whileHover={{ scale: 1.1, rotate: 8 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() =>
+                update({ food: FOODS[Math.floor(Math.random() * FOODS.length)] })
+              }
+              className="font-display rounded-full bg-[var(--sky)]/30 px-3 py-1 text-xs font-bold text-[var(--grape)]"
+            >
+              🎲 surprise me
+            </motion.button>
+          </div>
           <div className="flex flex-wrap gap-2">
             {FOODS.map((f, i) => {
               const active = food === f;
