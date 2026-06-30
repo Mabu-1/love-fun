@@ -20,6 +20,15 @@ const NO_PHRASES = [
 const TILTS = [-6, -3, 0, 3, 6, -4, 4];
 const EDGE_PADDING = 16;
 
+function getViewportSize() {
+  if (typeof window === "undefined") return { width: 0, height: 0 };
+  const vv = window.visualViewport;
+  return {
+    width: vv ? vv.width : window.innerWidth,
+    height: vv ? vv.height : window.innerHeight,
+  };
+}
+
 export default function AskPage() {
   const router = useRouter();
   const { update } = useLove();
@@ -35,10 +44,9 @@ export default function AskPage() {
     const btn = noButtonRef.current;
     if (!btn) return;
     const rect = btn.getBoundingClientRect();
-    const w = rect.width;
-    const h = rect.height;
-    const maxLeft = Math.max(window.innerWidth - w - EDGE_PADDING, EDGE_PADDING);
-    const maxTop = Math.max(window.innerHeight - h - EDGE_PADDING, EDGE_PADDING);
+    const { width: vw, height: vh } = getViewportSize();
+    const maxLeft = Math.max(vw - rect.width - EDGE_PADDING, EDGE_PADDING);
+    const maxTop = Math.max(vh - rect.height - EDGE_PADDING, EDGE_PADDING);
     const left = EDGE_PADDING + Math.random() * (maxLeft - EDGE_PADDING);
     const top = EDGE_PADDING + Math.random() * (maxTop - EDGE_PADDING);
     setNoPos({ left, top });
@@ -51,7 +59,7 @@ export default function AskPage() {
     setTimeout(() => router.push("/schedule"), 600);
   }
 
-  // keep the dodged button on-screen if the window gets resized/rotated
+  // keep the dodged button on-screen if the window/viewport gets resized
   useEffect(() => {
     function handleResize() {
       setNoPos((pos) => {
@@ -59,8 +67,9 @@ export default function AskPage() {
         const btn = noButtonRef.current;
         if (!btn) return pos;
         const rect = btn.getBoundingClientRect();
-        const maxLeft = Math.max(window.innerWidth - rect.width - EDGE_PADDING, EDGE_PADDING);
-        const maxTop = Math.max(window.innerHeight - rect.height - EDGE_PADDING, EDGE_PADDING);
+        const { width: vw, height: vh } = getViewportSize();
+        const maxLeft = Math.max(vw - rect.width - EDGE_PADDING, EDGE_PADDING);
+        const maxTop = Math.max(vh - rect.height - EDGE_PADDING, EDGE_PADDING);
         return {
           left: Math.min(pos.left, maxLeft),
           top: Math.min(pos.top, maxTop),
@@ -68,11 +77,15 @@ export default function AskPage() {
       });
     }
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.visualViewport?.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.visualViewport?.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-16 text-center">
+    <main className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden px-6 py-16 text-center">
       <motion.p
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}

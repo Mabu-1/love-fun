@@ -8,7 +8,7 @@ const FLOATERS = ["💌", "✨", "💫", "🌸"];
 
 export default function StepShell({ step, eyebrow, title, subtitle, children }) {
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-16">
+    <main className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden px-6 py-16">
       {FLOATERS.map((emoji, i) => (
         <motion.span
           key={emoji}

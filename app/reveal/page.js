@@ -70,7 +70,7 @@ export default function RevealPage() {
   const HEARTS = ["💕", "💖", "💗", "💝", "💞"];
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-16 text-center">
+    <main className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden px-6 py-16 text-center">
       {HEARTS.map((h, i) => (
         <motion.span
           key={i}
